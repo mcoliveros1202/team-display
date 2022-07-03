@@ -8,9 +8,3 @@ test('creates a Manager object', () => {
     expect(manager.email).toBe('email@email.com');
     expect(manager.office).toEqual(expect.any(Number));
 });
-
-/* test('creates an office number object', () => {
-    const officeNumber = new Office();
-
-    expect(officeNumber.value).toEqual(expect.any(Number));
-}); */
