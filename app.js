@@ -1,17 +1,20 @@
+const fs = require('fs');
 const inquirer = require('inquirer');
-const generateHTML = require('./src/html-template');
-const { writeFile, copyFile } = require('./utils/generate-site');
 
-const Manager = require('./lib/Manager');
-const Engineer = require('./lib/Engineer');
-const Intern = require('./lib/Intern');
+const generateHTML = require('./src/html-template');
+
+
+
+// const Manager = require('./lib/Manager');
+// const Engineer = require('./lib/Engineer');
+// const Intern = require('./lib/Intern');
 
 
 const path = require('path');
 
 const managerInfo = () => {
     return inquirer.prompt([
-        // MANAGER INFO
+
         {
             type: 'input',
             name: 'managerName',
@@ -35,16 +38,15 @@ const managerInfo = () => {
     ]);
 };
 
-const jobOptions = employeeData => {
+
+const jobOptions = () => {
     console.log(`
     ==================
     Add a New Employee
     ==================
     `);
 
-    if (!employeeData.employee) {
-        employeeData.employee = [];
-    }
+
     const employeeMenu = [
         {
             type: 'list',
@@ -59,9 +61,12 @@ const jobOptions = employeeData => {
     ];
     return inquirer.prompt(employeeMenu);
 };
-const questions = () => {
+const Engineerquestions = (employeeData) => {
+    if (!employeeData.employee) {
+        employeeData.employee = [];
+    }
     for (let count = 0; count < 3; count++) {
-        jobOptions()
+       await jobOptions()
             .then(answers => {
                 if (answers.employeeMenu === 'engineer') {
                     return new Promise((resolve, reject) => {
@@ -92,7 +97,7 @@ const questions = () => {
                                 resolve(answers);
                             })
                     })
-                } else if (answers.jobOption === 'InternQuestions') {
+                } else if (answers.employeeMenu === 'InternQuestions') {
                     return new Promise((resolve, reject) => {
                         inquirer
                             .prompt([
@@ -126,46 +131,67 @@ const questions = () => {
                     process.exit(0);
                 }
             })
-            .then((data) => { console.log(util.inspect(data, { showHidden: false, depth: null })); })
-            .catch((error, response) => {
-                console.error('Error:', error);
-            });
+//             // .then(employeeData => {
+//             //     jobData.employee.push(employeeData);
+//             //     if (employeeData.)
+            // })
     }
 };
 
 managerInfo()
-    .then(jobOptions)
-    .then(questions)
-    .then(employeeData => {
-        return generateHTML(employeeData);
-    })
-    .then(programHTML => {
-        return writeFile(programHTML);
-    })
-    .then(writeFileResponse => {
-        console.log(writeFileResponse);
-        return copyFile;
-    })
-    .then(copyFileResponse => {
-        console.log(copyFileResponse);
-    })
-    .catch(err => {
-        console.log(err);
-    });
+.then(jobOptions)
+.then(questions);
+     
 
-// function to write a file
-function writeToFile(fileName, data) {
-    return fs.writeFileSync(path.join(process.cwd(), fileName), data)
-};
+//     .then(employeeData => {
+//         return generateHTML(employeeData);
+//     })
+//     .then(programHTML => {
+//         return writeFile(programHTML);
+//     })
+//     .then(writeFileResponse => {
+//         console.log(writeFileResponse);
+//         return copyFile;
+//     })
+//     .then(copyFileResponse => {
+//         console.log(copyFileResponse);
+//     })
+//     .catch(err => {
+//         console.log(err);
+//     });
 
-// initialize the program
-function init() {
-    inquirer.prompt(questions).then((inquirerResponses) => {
-        writeToFile('team.html', generateHTML({ ...inquirerResponses }))
-    })
-};
+//     promptUser()
+//   .then(promptProject)
+//   .then(portfolioData => {
+//     return generatePage(portfolioData);
+//   })
+//   .then(pageHTML => {
+//     return writeFile(pageHTML);
+//   })
+//   .then(writeFileResponse => {
+//     console.log(writeFileResponse);
+//     return copyFile();
+//   })
+//   .then(copyFileResponse => {
+//     console.log(copyFileResponse);
+//   })
+//   .catch(err => {
+//     console.log(err);
+//   });
 
-// function call to initialize program
-init();
+ // function to write a file
+//  function writeToFile(fileName, data){
+//     return fs.writeFileSync(path.join(process.cwd(), fileName), data)
+// };
 
-module.exports = Program;
+// // initialize the program
+// function init() {
+//     inquirer.prompt(managerInfo).then((inquirerResponses) => {
+//         writeToFile('team.html', generateHTML({ ...inquirerResponses}))
+//     })
+// };
+
+// // function call to initialize program
+// init(); 
+
+// module.exports = Program;
