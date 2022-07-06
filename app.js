@@ -1,197 +1,137 @@
 const fs = require('fs');
 const inquirer = require('inquirer');
+const render = require('./src/html-template.js')
 
-const generateHTML = require('./src/html-template');
-
-
-
-// const Manager = require('./lib/Manager');
-// const Engineer = require('./lib/Engineer');
-// const Intern = require('./lib/Intern');
+const Manager = require('./lib/Manager');
+const Engineer = require('./lib/Engineer');
+const Intern = require('./lib/Intern');
 
 
 const path = require('path');
 
-const managerInfo = () => {
-    return inquirer.prompt([
+const generalInfo = [
 
-        {
-            type: 'input',
-            name: 'managerName',
-            message: "Provide the manager's name."
-        },
-        {
-            type: 'number',
-            name: 'managerId',
-            message: "Provide the manager's employee ID."
-        },
-        {
-            type: 'input',
-            name: 'managerEmail',
-            message: "Provide the manager's employee e-mail address."
-        },
-        {
-            type: 'number',
-            name: 'office',
-            message: "Provide the manager's office number."
-        },
-    ]);
-};
+    {
+        type: 'input',
+        name: 'name',
+        message: "Provide employee name."
+    },
+    {
+        type: 'number',
+        name: 'id',
+        message: "Provide employee ID number."
+    },
+    {
+        type: 'input',
+        name: 'email',
+        message: "Provide the employee email address."
+    }
+];
 
+let teamInfo = [];
+const idArray = [];
 
-const jobOptions = () => {
-    console.log(`
-    ==================
-    Add a New Employee
-    ==================
-    `);
-
-
-    const employeeMenu = [
+// prompt generalInfo questions and manager-specific question
+function startQuestions() {
+    inquirer
+        .prompt([
+            ...generalInfo,
+            {
+                type: 'input',
+                name: 'office',
+                message: "Provide the manager's office number."
+            }
+        ]).then(answers => {
+            const manager = new Manager(
+                answers.name,
+                answers.id,
+                answers.email,
+                answers.office
+            )
+            teamInfo.push(manager)
+                idArray.push(answers.id)
+                createTeam()
+        })
+}
+function createTeam(){
+    inquirer
+    .prompt([
         {
             type: 'list',
-            name: 'positionOptions',
-            message: 'Select the next position',
-            choices: [
-                { name: 'Engineer', value: 'engineer'},
-                { name: 'Intern', value: 'intern'},
-                { name: 'Team Complete', value: 'complete'}
-            ]
+            name: 'confirmNew',
+            message: 'Would you like to add another team member?',
+            choices: ['Engineer', 'Intern', 'No more!']
         }
-    ];
-    return inquirer.prompt(employeeMenu);
-};
-const Engineerquestions = (employeeData) => {
-    if (!employeeData.employee) {
-        employeeData.employee = [];
-    }
-    for (let count = 0; count < 3; count++) {
-       await jobOptions()
-            .then(answers => {
-                if (answers.employeeMenu === 'engineer') {
-                    return new Promise((resolve, reject) => {
-                        inquirer
-                            .prompt([
-                                {
-                                    type: 'input',
-                                    name: 'engineerName',
-                                    message: "Provide engineer's name."
-                                },
-                                {
-                                    type: 'number',
-                                    name: 'engineerId',
-                                    message: "Provide engineer's employee ID number."
-                                },
-                                {
-                                    type: 'input',
-                                    name: 'engineerEmail',
-                                    message: "Provide engineer's employee email address."
-                                },
-                                {
-                                    type: 'input',
-                                    name: 'github',
-                                    message: "Provide engineer's GitHub username."
-                                }
-                            ])
-                            .then(answers => {
-                                resolve(answers);
-                            })
-                    })
-                } else if (answers.employeeMenu === 'InternQuestions') {
-                    return new Promise((resolve, reject) => {
-                        inquirer
-                            .prompt([
-                                {
-                                    type: 'input',
-                                    name: 'internName',
-                                    message: "Provide intern's name."
-                                },
-                                {
-                                    type: 'number',
-                                    name: 'internId',
-                                    message: "Provide intern's employee ID number."
-                                },
-                                {
-                                    type: 'input',
-                                    name: 'internEmail',
-                                    message: "Provide intern's employee email address."
-                                },
-                                {
-                                    type: 'input',
-                                    name: 'school',
-                                    message: "Provide the name of intern's school."
-                                }
-                            ])
-                            .then(answers => {
-                                resolve(answers);
-                            })
-                    });
-                } else {
-                    console.log('Team member assembly complete!')
-                    process.exit(0);
-                }
-            })
-//             // .then(employeeData => {
-//             //     jobData.employee.push(employeeData);
-//             //     if (employeeData.)
-            // })
-    }
-};
+    ])
+    .then(answer => {
+        switch (answer.confirmNew){
+            case 'Engineer':
+                addEngineer()
+                break
+            case 'Intern':
+                addIntern()
+                break
+            default:
+                buildTeam()
+        }
+    })
+}
+function addEngineer(){
+    inquirer
+        .prompt([
+            ...generalInfo,
+            {
+                type: 'input',
+                name: 'github',
+                message: "Provide the engineer's GitHub username."
+            }
+        ])
+        .then(answers => {
+            const engineer = new Engineer(
+                answers.name,
+                answers.id,
+                answers.email,
+                answers.office
+            )
+            teamInfo.push(engineer)
+                idArray.push(answers.id)
+                createTeam()
+        })
+}
 
-managerInfo()
-.then(jobOptions)
-.then(questions);
-     
+function addIntern(){
+    inquirer
+        .prompt([
+            ...generalInfo,
+            {
+                type: 'input',
+                name: 'school',
+                message: "Provide the intern's school name."
+            }
+        ])
+        .then(answers => {
+            const intern = new Intern(
+                answers.name,
+                answers.id,
+                answers.email,
+                answers.office
+            )
+            teamInfo.push(intern)
+                idArray.push(answers.id)
+                createTeam()
+        })
+}
 
-//     .then(employeeData => {
-//         return generateHTML(employeeData);
-//     })
-//     .then(programHTML => {
-//         return writeFile(programHTML);
-//     })
-//     .then(writeFileResponse => {
-//         console.log(writeFileResponse);
-//         return copyFile;
-//     })
-//     .then(copyFileResponse => {
-//         console.log(copyFileResponse);
-//     })
-//     .catch(err => {
-//         console.log(err);
-//     });
+function buildTeam(){
+    return fs.writeFileSync(path.join(process.cwd(), 'index.html'), render(teamInfo), 'utf-8')
+}
 
-//     promptUser()
-//   .then(promptProject)
-//   .then(portfolioData => {
-//     return generatePage(portfolioData);
-//   })
-//   .then(pageHTML => {
-//     return writeFile(pageHTML);
-//   })
-//   .then(writeFileResponse => {
-//     console.log(writeFileResponse);
-//     return copyFile();
-//   })
-//   .then(copyFileResponse => {
-//     console.log(copyFileResponse);
-//   })
-//   .catch(err => {
-//     console.log(err);
-//   });
+startQuestions();
 
- // function to write a file
-//  function writeToFile(fileName, data){
-//     return fs.writeFileSync(path.join(process.cwd(), fileName), data)
-// };
 
-// // initialize the program
-// function init() {
-//     inquirer.prompt(managerInfo).then((inquirerResponses) => {
-//         writeToFile('team.html', generateHTML({ ...inquirerResponses}))
-//     })
-// };
+
+// // // initialize the program
 
 // // function call to initialize program
-// init(); 
 
-// module.exports = Program;
+module.exports = Program;
