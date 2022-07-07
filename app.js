@@ -31,28 +31,53 @@ const generalInfo = [
 let teamInfo = [];
 const idArray = [];
 
-// prompt generalInfo questions and manager-specific question
+// prompt manager-specific questions
 function startQuestions() {
     inquirer
         .prompt([
-            ...generalInfo,
             {
                 type: 'input',
-                name: 'office',
-                message: "Provide the manager's office number."
+                name: 'nameManager',
+                message: "Provide manager's name."
             }
-        ]).then(answers => {
-            const manager = new Manager(
-                answers.name,
-                answers.id,
-                answers.email,
-                answers.office
-            )
-            teamInfo.push(manager)
-                idArray.push(answers.id)
-                createTeam()
+            // {
+            //     type: 'number',
+            //     name: 'idManager',
+            //     message: "Provide manager's ID number."
+            // },
+            // {
+            //     type: 'input',
+            //     name: 'emailManager',
+            //     message: "Provide the manager's email address."
+            // },
+            // {
+            //     type: 'input',
+            //     name: 'office',
+            //     message: "Provide the manager's office number."
+            // }
+
+            // put answers into manager constant and push manager into idArray, then call createTeam()
+        ])
+        .then((answers) => {
+            // const manager = new Manager(
+            //     answers.nameManager,
+            //     answers.idManager,
+            //     answers.emailManager,
+            //     answers.office
+            // )
+            // teamInfo.push(manager)
+            //     idArray.push(answers.idManager)
+            //     createTeam()
+            console.log(answers);
+        })
+        .catch((err) => {
+            if(err) {
+                throw err
+            }
         })
 }
+
+// prompt to add another team member or to finish build
 function createTeam(){
     inquirer
     .prompt([
@@ -76,6 +101,8 @@ function createTeam(){
         }
     })
 }
+
+// ask generalInfo questions and engineer-specific question
 function addEngineer(){
     inquirer
         .prompt([
@@ -86,12 +113,13 @@ function addEngineer(){
                 message: "Provide the engineer's GitHub username."
             }
         ])
+        // then create new constant for engineer and put answers into idArray
         .then(answers => {
             const engineer = new Engineer(
                 answers.name,
                 answers.id,
                 answers.email,
-                answers.office
+                answers.github
             )
             teamInfo.push(engineer)
                 idArray.push(answers.id)
@@ -99,6 +127,7 @@ function addEngineer(){
         })
 }
 
+// ask generalInfo questions and intern-specific question
 function addIntern(){
     inquirer
         .prompt([
@@ -109,12 +138,14 @@ function addIntern(){
                 message: "Provide the intern's school name."
             }
         ])
+
+        // then put answers into new intern constant and push the constant into idArray
         .then(answers => {
             const intern = new Intern(
                 answers.name,
                 answers.id,
                 answers.email,
-                answers.office
+                answers.school
             )
             teamInfo.push(intern)
                 idArray.push(answers.id)
@@ -122,16 +153,15 @@ function addIntern(){
         })
 }
 
+
 function buildTeam(){
+    // write the index.html file by joining the path segments and creating a string and the current directory
     return fs.writeFileSync(path.join(process.cwd(), 'index.html'), render(teamInfo), 'utf-8')
 }
 
+// initialize the program
 startQuestions();
 
-
-
-// // // initialize the program
-
-// // function call to initialize program
+// function call to initialize program
 
 module.exports = Program;
