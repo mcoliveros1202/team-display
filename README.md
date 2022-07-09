@@ -33,6 +33,9 @@
 
     For more of my work, visit [GitHub] 
     https://github.com/mcoliveros1202
+  
+  ## Walkthrough Video
+  
 
 ## Resources Referenced
 

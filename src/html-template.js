@@ -39,9 +39,9 @@ const generateTeam = teamInfo => {
             <div class="card-body">
               <ul class="list-group list-group-flush">
                   <li class="list-group-item text-dark" id="id">ID Number: ${id}</li>
-                  <li class="list-group-item text-dark" id="email">'E-mail:'<a href='mailto:${email}'> ${email}</a></li>
+                  <li class="list-group-item text-dark" id="email">E-mail:<a href='mailto:${email}'> ${email}</a></li>
                   ${teamMember.getRole() == 'Manager' ? (`<li class="list-group-item text-dark" id="office">Office Number: ${teamMember.getOffice()}</li>`) : ''}
-                  ${teamMember.getRole() == 'Engineer' ? (`<li class="list-group-item text-dark" id="github">'Github Username:'<a href='github.com/${teamMember.getGithub()}'> ${teamMember.getGithub()}</li>`) : ''}
+                  ${teamMember.getRole() == 'Engineer' ? (`<li class="list-group-item text-dark" id="github">Github Username:<a href='https://github.com/${teamMember.getGithub()}' target="_blank"> ${teamMember.getGithub()}</li>`) : ''}
                   ${teamMember.getRole() == 'Intern' ? (`<li class="list-group-item text-dark" id="school">School: ${teamMember.getSchool()}</li>`) : ''}
               </ul>
           </div>
