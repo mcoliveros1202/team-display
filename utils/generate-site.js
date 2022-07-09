@@ -19,6 +19,7 @@ const writeFile = fileContent => {
     });
 };
 
+// copy file.. pero why? idk beside that's what was done in mod 9
 const copyFile = () => {
     return new Promise((resolve, reject) => {
         fs.copyFile('./src/style.css', './dist/style.css', err => {

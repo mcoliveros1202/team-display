@@ -1,6 +1,7 @@
 const fs = require('fs');
 const inquirer = require('inquirer');
 const render = require('./src/html-template.js')
+// const generateSite = require('./utils/generate-site');
 
 const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
@@ -39,36 +40,35 @@ function startQuestions() {
                 type: 'input',
                 name: 'nameManager',
                 message: "Provide manager's name."
+            },
+            {
+                type: 'number',
+                name: 'idManager',
+                message: "Provide manager's ID number."
+            },
+            {
+                type: 'input',
+                name: 'emailManager',
+                message: "Provide the manager's email address."
+            },
+            {
+                type: 'input',
+                name: 'office',
+                message: "Provide the manager's office number."
             }
-            // {
-            //     type: 'number',
-            //     name: 'idManager',
-            //     message: "Provide manager's ID number."
-            // },
-            // {
-            //     type: 'input',
-            //     name: 'emailManager',
-            //     message: "Provide the manager's email address."
-            // },
-            // {
-            //     type: 'input',
-            //     name: 'office',
-            //     message: "Provide the manager's office number."
-            // }
 
             // put answers into manager constant and push manager into idArray, then call createTeam()
         ])
         .then((answers) => {
-            // const manager = new Manager(
-            //     answers.nameManager,
-            //     answers.idManager,
-            //     answers.emailManager,
-            //     answers.office
-            // )
-            // teamInfo.push(manager)
-            //     idArray.push(answers.idManager)
-            //     createTeam()
-            console.log(answers);
+            const manager = new Manager(
+                answers.nameManager,
+                answers.idManager,
+                answers.emailManager,
+                answers.office
+            )
+            teamInfo.push(manager)
+                idArray.push(answers.idManager)
+                createTeam()
         })
         .catch((err) => {
             if(err) {
