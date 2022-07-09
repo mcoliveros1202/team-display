@@ -161,7 +161,3 @@ function buildTeam(){
 
 // initialize the program
 startQuestions();
-
-// function call to initialize program
-
-// module.exports = Program;
