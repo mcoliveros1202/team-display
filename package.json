@@ -1,6 +1,7 @@
 {
   "dependencies": {
-    "inquirer": "^8.0.0"
+    "inquirer": "^8.0.0",
+    "inquirer-menu": "^1.0.0"
   },
   "name": "team-display",
   "description": "",

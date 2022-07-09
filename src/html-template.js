@@ -15,10 +15,23 @@ const generateHeader = () => {
       <link rel="stylesheet" href="style.css">
     </head>
 
-    <section class="" id="header">
+    <body>
+    <header>
+    <div class="" id="header">
         <h1 class="p-3 mb-2 bg-primary text-white">My Team</h2>
-    </section>
+    </div>
+    </header>
 
-    <div
-    `
-}
+    <main class="container">
+
+    </main>
+
+    <footer class="container text-center py-3">
+      <h3 class="text-dark">&copy; ${new Date().getFullYear()} by Madelyn Oliveros</h3>
+    </footer>
+  </body>
+  </html>
+  `;
+};
+
+module.exports = generateHeader;
