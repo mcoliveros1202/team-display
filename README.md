@@ -33,6 +33,11 @@
 
     For more of my work, visit [GitHub] 
     https://github.com/mcoliveros1202
+   
+  ## Walkthrough Video
+ 
+https://user-images.githubusercontent.com/104112466/178122037-15350617-f84a-414f-9931-79eab171a826.mp4
+
 
 ## Resources Referenced
 
