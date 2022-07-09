@@ -31,11 +31,12 @@
 
   ## Questions
 
-    For more of my work, visit my [GitHub] 
+    For more of my work, visit [GitHub] 
     https://github.com/mcoliveros1202
-  
+   
   ## Walkthrough Video
-  
+
+https://user-images.githubusercontent.com/104112466/178122527-3a8bd29a-0443-4825-b7b9-1a010e058839.mp4
 
 ## Resources Referenced
 
@@ -44,4 +45,4 @@
 - inquirer documentation
 - jest documentation
 - https://fontawesome.com/
-- https://getbootstrap.com/docs/5.2/getting-started/introduction/
+- https://getbootstrap.com/docs/5.2/getting-started/    introduction/
