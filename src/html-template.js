@@ -3,6 +3,7 @@ const generateTeam = teamInfo => {
   const teamHtmlArr = teamInfo.map((teamMember) => {
     const { name, id, email } = teamMember
 
+    // allows for object-specific styling
     let headerColor = 'black'
     let icon = 'fa-solid fa-clipboard-list'
     let textColor = 'text-white'
@@ -26,9 +27,10 @@ const generateTeam = teamInfo => {
       default:
         break;
     }
+    // cards-- code and styling
     return `
 
-            <div class="card">
+            <div class="card m-2">
                 <div class="card-header ${headerColor} ${textColor}">
                     <div class="font-weight-bold" id="name">${name}</div>
                     <div id="job"><i class=${icon}></i>${teamMember.getRole()}</div>
@@ -37,27 +39,26 @@ const generateTeam = teamInfo => {
             <div class="card-body">
               <ul class="list-group list-group-flush">
                   <li class="list-group-item text-dark" id="id">ID Number: ${id}</li>
-                  <li class="list-group-item text-dark" id="email"><a href='${email}'>E-mail: ${email}</a></li>
+                  <li class="list-group-item text-dark" id="email">'E-mail:'<a href='mailto:${email}'> ${email}</a></li>
                   ${teamMember.getRole() == 'Manager' ? (`<li class="list-group-item text-dark" id="office">Office Number: ${teamMember.getOffice()}</li>`) : ''}
-                  ${teamMember.getRole() == 'Engineer' ? (`<li class="list-group-item text-dark" id="github">Github Username: ${teamMember.getGithub()}</li>`) : ''}
+                  ${teamMember.getRole() == 'Engineer' ? (`<li class="list-group-item text-dark" id="github">'Github Username:'<a href='github.com/${teamMember.getGithub()}'> ${teamMember.getGithub()}</li>`) : ''}
                   ${teamMember.getRole() == 'Intern' ? (`<li class="list-group-item text-dark" id="school">School: ${teamMember.getSchool()}</li>`) : ''}
               </ul>
           </div>
+        </div>
     `
   })
   return `
 
     <section class="my-3" id="team">
     <div class="flex-row justify-space-between">
-
-      <!-- Leaving this empty as we'll dynamically insert project HTML here -->
     ${teamHtmlArr}
       </div>
   </section>
   `;
 };
 
-// create header
+// create header and skeleton of webpage
 module.exports = generateHeader = (teamInfo) => {
   return `
     <!DOCTYPE html>
